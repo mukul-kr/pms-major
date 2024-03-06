@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: postgres_db
+    ports:
+      - 5432:5432
+    restart: always
+    env_file: ./postgres-db/.env
+    networks:
+      - backend-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app-notification:
+    build: notification/.
+    container_name: notification
+    volumes:
+      - ./notification:/home
+    depends_on:
+      - db
+      - redis
+    restart: always
+    ports:
+      - 8000:8000
+    networks:
+      - backend-network
+    env_file: ./notification/.env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - backend-network
+    volumes:
+      - redis-data:/data
+
+networks:
+  backend-network:
+
+
+volumes:
+  pgdata:
+  redis-data:
+
