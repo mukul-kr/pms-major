@@ -14,32 +14,7 @@ logger = logging.getLogger(__name__)
 context = ssl.create_default_context()
 
 
-def createMessage(
-    To: str,
-    Subject: str,
-    html: str,
-    name: str = "",
-    additionalProps: dict = {},
-) -> MIMEMultipart:
-    message = MIMEMultipart("alternative")
-    try:
-        template = env.from_string(html)
-        additionalProps["name"] = name
-        rendered_html_string = template.render(additionalProps)
-        subject = env.from_string(Subject)
-        Subject = subject.render(additionalProps)
-        message["Subject"] = Subject
-        message["From"] = EMAIL
-        message["To"] = To
-        html_content = MIMEText(rendered_html_string, "html")
-        message.attach(html_content)
-        return message
-    except Exception as e:
-        logger.error(f"error creating email message. Error : {e}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error creating email message. Error : {e}",
-        )
+
 
 
 def sendMail(
