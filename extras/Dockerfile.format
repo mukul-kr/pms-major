@@ -1,0 +1,13 @@
+# Dockerfile.formatlint
+
+# Use an official Python image as the base image
+FROM python:3.9-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Install black and flake8
+RUN pip install black flake8
+
+# Define the entry point
+ENTRYPOINT ["black", "flake8"]
