@@ -50,6 +50,9 @@ class NotificationClient(HTTPClient):
 
     def post_device_off_notification(self, payload):
         return self.post("notification/notify", payload)
+    
+    def post_high_severity_data_notification(self, payload):
+        return self.post("notification/notify", payload)
 
     def get_health_check(self):
         return self.get("health-check")

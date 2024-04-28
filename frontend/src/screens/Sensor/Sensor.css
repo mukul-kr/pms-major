@@ -1,0 +1,117 @@
+.filters{
+    display: flex;
+    flex-direction: row;
+    padding-top: 100px;
+    padding-left: 100px;
+    justify-content: space-around;
+    width: 90%;
+}
+
+.wrapper-card{
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.graph-container{
+    max-width: calc(100vw - 200px) !important;
+    padding-left: 100px;
+    margin-top: 20px;
+}
+
+.vscomp-toggle-button{
+    min-width: 250px !important;
+}
+
+.drop-down-filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 55%;
+}
+
+.date-filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 35%;
+}
+
+@media screen and (max-width: 1250px) {
+    .date-filters{
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .date-filters{
+        width: 42%;
+    }
+    .drop-down-filters{
+        width: 58%;
+    }
+    .filters{
+        padding-left: 70px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .filters{
+        flex-direction: column;
+    }
+
+    .date-filters{
+        margin-top: 20px;
+        width: 90%;
+        justify-content: space-around;
+    }
+
+    .drop-down-filters{
+        width: 90%;
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .date-filters{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0px;
+        width: 100%;
+    }
+    .drop-down-filters{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .date-filters input{
+
+        width: 250px;
+        margin-top: 10px;
+    }
+    .vscomp-toggle-button{
+        margin-top: 10px;
+    }
+    
+
+    .graph-container{
+        min-width: calc(100% - 65px) !important;
+        padding-left: 75px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .date-filters input{
+        width: 200px !important;
+    }
+
+    .vscomp-toggle-button{
+        max-width: 200px !important;
+        min-width: 200px !important;
+    }
+
+    .vscomp-ele{
+        max-width: 200px !important;
+    }
+}
+

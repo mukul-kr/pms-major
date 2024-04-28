@@ -149,3 +149,13 @@ def get_data_of_device_user_by_timerange(
         .all()
     )
     return data
+
+
+def get_latest_device_sensor(session: Session, device_id: int, sensor_id: int):
+    data = (
+        session.query(Data)
+        .filter(Data.device_id == device_id, Data.sensor_id == sensor_id)
+        .order_by(Data.created_at.desc())
+        .first()
+    )
+    return data

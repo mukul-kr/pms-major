@@ -3,6 +3,7 @@ from sqlalchemy import (
     String,
     Integer,
     Boolean,
+    Float,
     UniqueConstraint,
     PrimaryKeyConstraint,
 )
@@ -15,8 +16,10 @@ class Sensor(Base):
     __tablename__ = "dc_sensor"
     name = Column(String(225), nullable=False, unique=True)
     id = Column(Integer, nullable=False, primary_key=True)
-    value = Column(Integer, nullable=False)
-    is_minimum_better = Column(Boolean, nullable=False)
+    value = Column(Float, nullable=False)
+    alertDirection = Column(Integer, nullable=False)
+    upperValueRange = Column(Float, nullable=False, default=0)
+    lowerValueRange = Column(Float, nullable=False, default=0)
     # project_id = Column(
     #     Integer,
     #     ForeignKey('project.id', ondelete='CASCADE'),

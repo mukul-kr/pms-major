@@ -90,7 +90,7 @@ void setAnalogInput(int a, int b, int c, int d) {
 void loop() {
   // HTTPClient http;
   // WiFiClient client;
-  readTdsQuick();
+  // readTdsQuick();
 
   // DynamicJsonDocument doc(1024);
   // doc["ext_id"] = "WaterWifi";
@@ -122,15 +122,15 @@ void loop() {
   // http.end();
   // delay(10000);
 
-  delay(1000);
+  // delay(1000);
 
   readpHData();
 
   // delay(10000);
   delay(1000);
 
-  readTurbidityData();
-  delay(1000);
+  // readTurbidityData();
+  // delay(1000);
 }
 
 void readTdsQuick() {
@@ -165,7 +165,7 @@ void readTurbidityData() {
   // // } else {
   //   turbidity_sensor::value = -1120.4 * square(Turbidity_Sensor_Voltage) + 5742.3 * Turbidity_Sensor_Voltage - 4352.9;
   // // }
-  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0,640, 100, 0) + 16;
+  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0,1023, 100, 0) + 16;
   Serial.print("turbidity: ");
   Serial.println(turbidity_sensor::value);
 

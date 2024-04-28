@@ -7,7 +7,7 @@ class DeviceBaseSchema(BaseModel):
 
 
 class CreateDeviceSchema(DeviceBaseSchema):
-    hashed_password: str = Field(alias="p")
+    secret: str = Field(alias="p")
 
 
 class BaseSchema(DeviceBaseSchema):

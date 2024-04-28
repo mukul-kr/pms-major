@@ -21,15 +21,7 @@ class Device(Base):
     __tablename__ = "dc_device"
     ext_id = Column(String(225), nullable=False, unique=True)
     id = Column(Integer, nullable=False, primary_key=True)
-    hashed_password = Column(LargeBinary, nullable=False)
-    # user_id = Column(
-    #     Integer,
-    #     ForeignKey("users.id", ondelete="CASCADE"),
-    #     nullable=False,
-    # )
-    # user = relationship('User', backref='devices')
-    # user_id = Column(Integer, ForeignKey('users.id', ondelete='SET NULL'))
-    # user = relationship('User', backref='devices')
+    secret = Column(String(225), nullable=False)
 
     # Define the relationship with the User table
     user_id = Column(Integer, nullable=False)

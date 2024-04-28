@@ -4,9 +4,10 @@ from pydantic import BaseModel, Field
 class SensorBaseSchema(BaseModel):
     name: str = Field(alias="sn")
     value: float
-    is_minimum_better: bool
-    # user_id: str
-    # project_id: str
+    alertDirection: int
+    upperValueRange: float
+    lowerValueRange: float
+
 
 
 class CreateSensorSchema(SensorBaseSchema):

@@ -12,7 +12,7 @@ def create_device_handler(session, payload):
         or not does_user_exists(payload.user_id)
     ):
         raise InvalidUserIdException("Invalid user id")
-    payload.hashed_password = Device.hash_password(payload.hashed_password)
+    # payload.hashed_password = Device.hash_password(payload.hashed_password)
     return create_device(session, device=payload)
 
 

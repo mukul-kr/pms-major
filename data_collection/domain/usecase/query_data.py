@@ -1,6 +1,7 @@
 from data.data import (
     get_data_of_multiple_device_multiple_sensor_by_timerange,
     get_data_of_device_user_by_timerange,
+    get_latest_device_sensor,
 )
 from models.device import Device
 
@@ -26,3 +27,7 @@ def query_data_handler(
             start_time=start_date,
             end_time=end_date,
         )
+
+
+def get_latest_device_sensor_handler(session, device_id, sensor_id):
+    return get_latest_device_sensor(session, device_id, sensor_id)

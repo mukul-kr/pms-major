@@ -22,16 +22,12 @@ def notify_inactive_devices(session: Session):
                 device.ext_id,  # type: ignore
             )
             print(payload)
-            response = notificationClient.post_device_off_notification(
-                payload=payload
-            )
+            response = notificationClient.post_device_off_notification(payload=payload)
 
             return response.json()
             # return payload
     except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}"
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
 
     return "All devices are active"
 
