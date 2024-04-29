@@ -18,8 +18,8 @@ templates = Jinja2Templates(
 
 
 origins = [
-    "http://pms.suvidhaen.com",
-    "https://pms.suvidhaen.com",
+    "http://pms-major-juet.netlify.app/",
+    "https://pms-major-juet.netlify.app/",
     "http://localhost",
     "http://localhost:3000",
 ]

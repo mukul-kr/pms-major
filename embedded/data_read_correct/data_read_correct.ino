@@ -12,30 +12,30 @@
 #define D2 4
 #define D3 0
 #define D4 2
-#define D5	14
-#define D6	12
-#define D7	13
-#define D8	15
-#define D9	3
-#define D10	1
-#define D11	9
-#define D12	10
+#define D5 14
+#define D6 12
+#define D7 13
+#define D8 15
+#define D9 3
+#define D10 1
+#define D11 9
+#define D12 10
 
 const byte SENSOR_PIN = A0;
 
 namespace tds_sensor {
-  float ec = 0;
-  unsigned int tds = 0;
-  float waterTemp = 30;
-  float ecCalibration = 1;
+float ec = 0;
+unsigned int tds = 0;
+float waterTemp = 30;
+float ecCalibration = 1;
 }
 
 namespace turbidity_sensor {
-  float value = 0;
+float value = 0;
 }
 
 namespace pH_sensor {
-  float value = 0;
+float value = 0;
 }
 
 void initSensors() {
@@ -55,10 +55,10 @@ void initSensors() {
 void setup() {
   Serial.begin(115200);
   initSensors();
-  // WiFiManager wifiManager;
-  // Serial.println("Connecting...");
-  // wifiManager.autoConnect("Mukul Node 1", "mukul1234");
-  // Serial.println("Connected");
+  WiFiManager wifiManager;
+  Serial.println("Connecting...");
+  wifiManager.autoConnect("Mukul Node 1", "mukul1234");
+  Serial.println("Connected");
 }
 
 void setAnalogInput(int a, int b, int c, int d) {
@@ -84,53 +84,56 @@ void setAnalogInput(int a, int b, int c, int d) {
   } else {
     digitalWrite(D3, LOW);
   }
-
 }
+
+
+void sendData(int sensor_id, float value) {
+  HTTPClient http;
+  WiFiClient client;
+  DynamicJsonDocument doc(1024);
+  doc["ext_id"] = "h22_2f";
+  doc["p"] = "secure@1";
+  doc["sensor_id"] = sensor_id;
+  doc["value"] = value;
+
+  String json;
+  serializeJson(doc, json);
+
+  http.begin(client, "http://34.93.25.177:3000/api/data");
+  http.addHeader("Content-Type", "application/json");
+
+  int httpCode = http.POST(json);
+
+  if (httpCode > 0) {
+    String payload = http.getString();
+    Serial.println(httpCode);
+    Serial.println(payload);
+    shortBlink();
+  } else {
+    String payload = http.getString();
+    Serial.println(httpCode);
+    Serial.println(payload);
+    Serial.println("Error on HTTP request");
+    longBlink();
+  }
+
+  http.end();
+}
+
 
 void loop() {
   // HTTPClient http;
   // WiFiClient client;
-  // readTdsQuick();
-
-  // DynamicJsonDocument doc(1024);
-  // doc["ext_id"] = "WaterWifi";
-  // doc["p"] = "WaterWifi";
-  // doc["sensor_id"] = 1;
-  // doc["value"] = tds_sensor::tds;
-
-  // String json;
-  // serializeJson(doc, json);
-
-  // http.begin(client, "http://34.93.25.177:7001/api/data");
-  // http.addHeader("Content-Type", "application/json");
-
-  // int httpCode = http.POST(json);
-
-  // if (httpCode > 0) {
-  //   String payload = http.getString();
-  //   Serial.println(httpCode);
-  //   Serial.println(payload);
-  //   shortBlink();
-  // } else {
-  //   String payload = http.getString();
-  //   Serial.println(httpCode);
-  //   Serial.println(payload);
-  //   Serial.println("Error on HTTP request");
-  //   longBlink();
-  // }
-
-  // http.end();
-  // delay(10000);
-
-  // delay(1000);
-
-  readpHData();
-
-  // delay(10000);
+  readTdsQuick();
   delay(1000);
-
-  // readTurbidityData();
-  // delay(1000);
+  readpHData();
+  delay(1000);
+  readTurbidityData();
+  delay(1000);
+  sendData(1, tds_sensor::tds);
+  sendData(2, pH_sensor::value);
+  sendData(3, turbidity_sensor::value);
+  sendData(4, 0);
 }
 
 void readTdsQuick() {
@@ -165,12 +168,11 @@ void readTurbidityData() {
   // // } else {
   //   turbidity_sensor::value = -1120.4 * square(Turbidity_Sensor_Voltage) + 5742.3 * Turbidity_Sensor_Voltage - 4352.9;
   // // }
-  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0,1023, 100, 0) + 16;
+  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0, 1023, 100, 0) + 16;
   Serial.print("turbidity: ");
   Serial.println(turbidity_sensor::value);
 
   setAnalogInput(1, 1, 1, 1);
-  
 }
 
 float square(float num) {
@@ -184,13 +186,13 @@ float round_to_dp(float in_value, int decimal_place) {
 }
 
 float customMap(float x, float fromLow, float fromHigh, float toLow, float toHigh) {
-    return toLow + ((x - fromLow) / (fromHigh - fromLow)) * (toHigh - toLow);
+  return toLow + ((x - fromLow) / (fromHigh - fromLow)) * (toHigh - toLow);
 }
 
 void readpHData() {
   setAnalogInput(0, 0, 1, 0);
-  Serial.println((float)analogRead(SENSOR_PIN)-65); 
-  pH_sensor::value = customMap((float)analogRead(SENSOR_PIN) - 65, 0,1024, 0, 14);
+  Serial.println((float)analogRead(SENSOR_PIN) - 65);
+  pH_sensor::value = customMap((float)analogRead(SENSOR_PIN) - 65, 0, 1024, 0, 14);
   // float calibration_value = 21.34;
   // int phval = 0;
   // unsigned long int avgval;
@@ -215,9 +217,8 @@ void readpHData() {
   // float volt = (float)avgval * 5.0 / 1024 / 6;
   // pH_sensor::value = -5.70 * volt + calibration_value;
   Serial.println(pH_sensor::value);
-  
-  setAnalogInput(1, 1, 1, 1);
 
+  setAnalogInput(1, 1, 1, 1);
 }
 
 void shortBlink() {
