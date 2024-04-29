@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://34.93.25.177:3000/',
+    baseURL: 'https://pms.heyiamsra.com/',
 });
 
 
