@@ -21,7 +21,7 @@ services:
     
     container_name: nginx
     ports:
-      - 7001:7001
+      - 3000:7001
     volumes:
       - ./extras/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
