@@ -19,6 +19,7 @@ origins = [
     "https://pms-major-juet.netlify.app",
     "http://localhost",
     "http://localhost:3000",
+    "*"
 ]
 
 app.add_middleware(
