@@ -143,7 +143,7 @@ const Analytics = () => {
                     chart: {
                         type: 'line',
                         zoomType: 'x',
-                        height: 800
+                        height: 700
                     },
                     xAxis: {
                         type: 'datetime',
