@@ -58,11 +58,11 @@ const CreateSensors = () => {
 
             <div style={{ display: 'grid', justifyContent: 'center', margin: '10px' }}>
 
-                <MDBRadio label='Value Higher than alert value is Better' id='1' value="1" name="direction" defaultChecked inline onChange={(e) => { handleSensorAlertDirectionChange(e) }} />
+                <MDBRadio label='Value Less than alert value is Better' id='1' value="1" name="direction" defaultChecked inline onChange={(e) => { handleSensorAlertDirectionChange(e) }} />
 
                 <MDBRadio label='Value Equal to alert value is Better' id='0' value="0" name="direction" inline onChange={(e) => { handleSensorAlertDirectionChange(e) }} />
 
-                <MDBRadio label='Value Equal to alert value is Better' id='-1' value="-1" name="direction" inline onChange={(e) => { handleSensorAlertDirectionChange(e) }} />
+                <MDBRadio label='Value Higher than alert value is Better' id='-1' value="-1" name="direction" inline onChange={(e) => { handleSensorAlertDirectionChange(e) }} />
 
 
             </div>

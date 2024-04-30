@@ -52,8 +52,12 @@ const Sensor = () => {
                             name={sensor.name}
                             id={sensor.id}
                             sensorAlertValue={sensor.value}
-                            sensorAlertDirection={sensor.alertDirection}
-                            upperRangeAlertValue={sensor.upperValueRange}
+                            sensorAlertDirection={
+                                sensor.alertDirection === 1 ? "Value Less than alert value is Better" :
+                                    sensor.alertDirection === 0 ? "Value Between range is Better" :
+                                        sensor.alertDirection === -1 ? "Value Higher than alert value is Better" :
+                                            "Invalid Alert Direction"
+                            } upperRangeAlertValue={sensor.upperValueRange}
                             lowerRangeAlertValue={sensor.lowerValueRange}
                         />
                     ))}
