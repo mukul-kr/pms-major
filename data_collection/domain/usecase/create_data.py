@@ -11,8 +11,6 @@ def create_data_handler(session, payload):
     if not validate_device(payload.device_id):
         raise Exception("Invalid device id")
 
-    checkHighSeverityDataNotify(session, payload.device_id, payload.sensor_id, payload.value)    
-
     if payload.sensor_id == 4:
         tds_data = get_latest_device_sensor_handler(session, payload.device_id, 1)
         ph_data = get_latest_device_sensor_handler(session, payload.device_id, 2)
@@ -23,20 +21,20 @@ def create_data_handler(session, payload):
             prediction = 0
         elif prediction > 1:
             prediction = 1
-
+        checkHighSeverityDataNotify(session, payload.device_id, payload.sensor_id, prediction) 
         new_payload = DataBaseSchema(
             value=prediction,
             sensor_id=payload.sensor_id,
             ext_id=payload.device_id,
         )
     else:
+        checkHighSeverityDataNotify(session, payload.device_id, payload.sensor_id, payload.value)  
         new_payload = DataBaseSchema(
             value=payload.value,
             sensor_id=payload.sensor_id,
             ext_id=payload.device_id,
         )
         
-
     return create_data(session, new_payload)  # type: ignore
 
 
