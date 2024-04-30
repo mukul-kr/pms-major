@@ -17,8 +17,15 @@ def create_data_handler(session, payload):
         tds_data = get_latest_device_sensor_handler(session, payload.device_id, 1)
         ph_data = get_latest_device_sensor_handler(session, payload.device_id, 2)
         trubidity_data = get_latest_device_sensor_handler(session, payload.device_id, 3)
+        prediction = predict([[tds_data.value, ph_data.value, trubidity_data.
+        value]])
+        if prediction < 0:
+            prediction = 0
+        elif prediction > 1:
+            prediction = 1
+
         new_payload = DataBaseSchema(
-            value=min(0,max(predict([[tds_data.value, ph_data.value, trubidity_data.value]]), 1)),
+            value=prediction,
             sensor_id=payload.sensor_id,
             ext_id=payload.device_id,
         )

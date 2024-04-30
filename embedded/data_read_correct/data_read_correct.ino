@@ -134,6 +134,8 @@ void loop() {
   sendData(2, pH_sensor::value);
   sendData(3, turbidity_sensor::value);
   sendData(4, 0);
+  delay(30000);
+
 }
 
 void readTdsQuick() {
@@ -168,7 +170,10 @@ void readTurbidityData() {
   // // } else {
   //   turbidity_sensor::value = -1120.4 * square(Turbidity_Sensor_Voltage) + 5742.3 * Turbidity_Sensor_Voltage - 4352.9;
   // // }
-  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0, 1023, 100, 0) + 16;
+
+  Serial.print("ana turbidity: ");
+  Serial.println((float)analogRead(SENSOR_PIN));
+  turbidity_sensor::value = customMap((float)analogRead(SENSOR_PIN), 0, 1023, 10, 0) ;
   Serial.print("turbidity: ");
   Serial.println(turbidity_sensor::value);
 
