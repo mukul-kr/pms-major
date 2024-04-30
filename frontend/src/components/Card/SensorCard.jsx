@@ -22,7 +22,7 @@ const SensorCardComponent = ({ name, id, sensorAlertValue, sensorAlertDirection,
                     <Typography variant="body2" component="p">
                         Alert Type: {sensorAlertDirection}
                     </Typography>
-                    {sensorAlertDirection != '0' ? (
+                    {sensorAlertDirection != 'Value Between range is Better' ? (
                         <Typography variant="body2" component="p">
                             Alert Value: {sensorAlertValue}
                         </Typography>
