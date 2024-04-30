@@ -131,8 +131,11 @@ void loop() {
   readTurbidityData();
   delay(1000);
   sendData(1, tds_sensor::tds);
+  delay(2000);
   sendData(2, pH_sensor::value);
+  delay(2000);
   sendData(3, turbidity_sensor::value);
+  delay(2000);
   sendData(4, 0);
   delay(30000);
 

@@ -15,7 +15,7 @@ def checkHighSeverityDataNotify(session: Session, ext_device_id: str, sensor_id:
     try:
         device : Device = get_device_by_ext_id(session=session, ext_id=ext_device_id)
         sensor: Sensor = get_sensor_by_id(session=session, id=sensor_id)
-        if not((sensor.alertDirection == 1 and value < sensor.value) or (sensor.alertDirection == 0 and value < sensor.lowerValueRange and value > sensor.upperValueRange) or (sensor.alertDirection == -1 and value > sensor.value)): # type: ignore
+        if (sensor.alertDirection == 1 and value < sensor.value) or (sensor.alertDirection == 0 and value > sensor.lowerValueRange and value < sensor.upperValueRange) or (sensor.alertDirection == -1 and value > sensor.value): # type: ignore
             return "Data is normal"
         
         payload = deviceEmailSchemaGenerator(device.user_id)
