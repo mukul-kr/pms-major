@@ -7,9 +7,7 @@ class EmailSchema(BaseModel):
     event: str
     secret: str
     model_config = ConfigDict(extra="allow")
-    # class Config:
-    #     extra = Extra.allow
-    #     extra_kwargs = {"device": {"required": False}}
+
 
 
 class EmailResponseSchema(BaseModel):
