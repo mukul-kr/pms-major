@@ -11,7 +11,7 @@ from fastapi import HTTPException
 from starlette import status
 
 
-def checkHighSeverityDataNotify(session: Session, ext_device_id: str, sensor_id: int, value: int):
+def checkHighSeverityDataNotify(session: Session, ext_device_id: str, sensor_id: int, value: float):
     try:
         device : Device = get_device_by_ext_id(session=session, ext_id=ext_device_id)
         sensor: Sensor = get_sensor_by_id(session=session, id=sensor_id)
@@ -25,8 +25,8 @@ def checkHighSeverityDataNotify(session: Session, ext_device_id: str, sensor_id:
             response.json()["email"],
             response.json()["full_name"],
             device.ext_id,  # type: ignore
-            sensor.name,
-            int(data.value),
+            f"{sensor.name} sensor",
+            float(value),
         )
         response = notificationClient.post_high_severity_data_notification(payload=payload)
 
@@ -37,7 +37,7 @@ def checkHighSeverityDataNotify(session: Session, ext_device_id: str, sensor_id:
 
     return "All devices are active"
 def highSeverityNotificationSchemaGenerator(
-    email: str, name: str, device: str, sensor_name: str, value: int
+    email: str, name: str, device: str, sensor_name: str, value: float
 ):
     return {
         "email": email,

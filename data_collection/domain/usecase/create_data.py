@@ -11,7 +11,7 @@ def create_data_handler(session, payload):
     if not validate_device(payload.device_id):
         raise Exception("Invalid device id")
 
-    # checkHighSeverityDataNotify(session, payload.device_id, payload.sensor_id, payload.value)    
+    checkHighSeverityDataNotify(session, payload.device_id, payload.sensor_id, payload.value)    
 
     if payload.sensor_id == 4:
         tds_data = get_latest_device_sensor_handler(session, payload.device_id, 1)
